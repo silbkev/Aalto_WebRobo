@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block header %}
+{% block title %} Register {% endblock %}
+{% endblock %}
+
+{% block content %}
+<form method="POST">
+  <div class="d-flex justify-content-center">
+    <div class="form-group">
+      {# This hidden_tag is a CSRF security feature. #}
+      {{ form.hidden_tag() }}
+      {{ form.username.label }}<br>
+      {{ form.username(class_ ="mb-2") }}<br>
+      {{ form.password.label }}<br>
+      {{ form.password(class_ ="mb-2") }}<br>
+      {{ form.pass_confirm.label }}<br>
+      {{ form.pass_confirm(class_ ="mb-2") }}<br>
+      {{ form.submit(class_ ="btn btn-primary my-2") }}
+    </div>
+  </div>
+</form>
+{% endblock %}

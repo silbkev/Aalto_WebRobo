@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+
+
+{% block header %}
+{% block title %} Dashboard {% endblock %}
+{% endblock %}
+
+{% block content %}
+
+<!-- Power button -->
+<div class="row d-flex justify-content-center">
+  <div class="col-lg-4">
+  <form method="POST">
+    <label class='toggle-label'>
+      <input type='checkbox' name="runningCheckbox" id=runningButton {{ running_button_state }} />
+      <span class='back'>
+        <span class='toggle'></span>
+        <span class='label on'>ON</span>
+        <span class='label off'>OFF</span>
+      </span>
+    </label>
+  </form>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="row mb-3 d-flex justify-content-center">
+      <h3> Throttle </h3>
+    </div>
+    <div class="row m-3 d-flex justify-content-center">
+      <div class="col-12 col-md-9 my-lg-5 py-lg-5 my-5">
+        <form id="speedform" method="POST">
+          <input id="speed" type="range" min="{{ minspeedlimit }}" max="{{ maxspeedlimit }}" step="0.01" value="{{ current_speed }}">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Speed slider -->
+<div class="row m-2 d-flex justify-content-center">
+
+  <!-- Robot view stream -->
+  <div class="col-lg-6">
+    <div class="row mb-3 d-flex justify-content-center">
+      <h3> Live Image </h3>
+    </div>
+    <div class="row m-3 d-flex justify-content-center">
+      <img class="img-fluid align-self-start" src="{{ url_for('robot.image_stream') }}">
+    </div>
+  </div>
+
+  <!-- Processed image stream -->
+  <div class="col-lg-6">
+    <div class="row mb-3 d-flex justify-content-center">
+      <h3> Processed Image </h3>
+    </div>
+    <div class="row m-3 d-flex justify-content-center">
+      <img class="img-fluid align-self-start" src="{{ url_for('robot.processed_image_stream') }}">
+    </div>
+  </div>
+
+</div>
+
+<!-- Chart of controler values! -->
+<div class="row mb-3 d-flex justify-content-center"><h3> Controller </h3></div>
+<div class="row mb-3 d-flex justify-content-center">
+
+  <div class="col-lg-6">
+    <div class="container-fluid" id="data-container-CONTROL"></div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="container-fluid" id="data-container-PID"></div>
+  </div>
+
+</div>
+
+
+<div class="row mb-3 d-flex justify-content-center"><h3> Status </h3></div>
+<div class="row mb-3 d-flex justify-content-center">
+
+  <div class="col-lg-6">
+      <div class="container-fluid" id="data-container-BATTERY"></div>
+  </div>
+
+  <div class="col-lg-6">
+      <div class="container-fluid" id="data-container-SPEED"></div>
+  </div>
+
+</div>
+
+{% endblock %}

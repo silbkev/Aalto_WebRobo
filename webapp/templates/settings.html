@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block header %}
+{% block title %}Settings{% endblock %}
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center">
+  <form class="col-6" method="POST" action="{{url_for('robot.settings')}}">
+
+    <div class="panel-group">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h4 class="panel-title mb-3">
+            <a data-toggle="collapse" href="#collapse0">General settings</a>
+          </h4>
+        </div>
+        <div id="collapse0" class="panel-collapse show">
+
+          <div class="form-group row mb-2">
+            <label class="col-sm-4">Speed limits</label>
+            <input type='number' class="col-sm-3" name="minspeedlimit" value={{ minspeedlimit }} step="0.01" min="0" max="0.49">
+            <p class="col-2 d-flex justify-content-center">-</p>
+            <input type='number' class="col-sm-3" name="maxspeedlimit" value={{ maxspeedlimit }} step="0.01" min="0.5" max="1">
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- VIS SETTINGS -->
+    <div class="panel-group">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h4 class="panel-title mb-3">
+            <a data-toggle="collapse" href="#collapse1">Vision settings</a>
+          </h4>
+        </div>
+        <div id="collapse1" class="panel-collapse mb-3 collapse">
+
+          <div class="form-group row mb-2">
+            <div class="col-sm-4 pb-3">Loose line detection</div>
+            <div class="col-sm-8 pb-3">
+              <div class="form-check move-left">
+                <input type='checkbox' class="col-sm-8 form-check-input" value="True" name="ONLY_BLACK" {{ ONLY_BLACK }}>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row mb-2">
+            <div class="col-sm-4 pb-3">Save problematic images</div>
+            <div class="col-sm-8 pb-3">
+              <div class="form-check move-left">
+                <input type='checkbox' class="col-sm-8 form-check-input" name="SAVE_PROBLEMATIC_IMAGE" {{ SAVE_PROBLEMATIC_IMAGE }}>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row mb-2">
+            <label for="TEMPLATE_THRESHOLD" class="col-sm-4">Template threshold</label>
+            <input type='number' class="col-sm-3" name="TEMPLATE_THRESHOLD" value={{ TEMPLATE_THRESHOLD }} step="0.01" min="0" max="5">
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+    <!-- PID SETTINGS -->
+    <div class="panel-group">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h4 class="panel-title mb-3">
+              <a data-toggle="collapse" href="#collapse2">PID parameters</a>
+            </h4>
+          </div>
+        <div id="collapse2" class="panel-collapse collapse">
+            <!-- NOTE: could write as K terms for more standard view. Also generate dynamically! -->
+              <div class="panel-body">Proximity PID</div>
+              <div class="form-group row mb-2">
+                  <label for="K_P" class="col-sm-4 col-form-label">P</label>
+                  <input type='number' class="col-sm-8" name="K_P" value={{ K_P }} step="0.1" min="0">
+              </div>
+              <div class="form-group row mb-2">
+                  <label for="K_I" class="col-sm-4 col-form-label ">I</label>
+                  <input type='number' class="col-sm-8" name="K_I" value={{ K_I }} step="0.1" min="0">
+              </div>
+              <div class="form-group row mb-2">
+                  <label for="K_D" class="col-sm-4 col-form-label">P</label>
+                  <input type='number' class="col-sm-8" name="K_D" value={{ K_D }} step="0.1" min="0">
+              </div>
+
+              <div class="panel-body">Weighting for Distance PID</div>
+              <div class="form-group row mb-2">
+                  <label for="K_d" class="col-sm-4 col-form-label">K<sub>d</sub></label>
+                  <input type='number' class="col-sm-8" name="K_d" value={{ K_d }} step="0.1" min="0">
+              </div>
+              <div class="panel-body">Distance PID</div>
+              <div class="form-group row mb-2">
+                  <label for="K_dP" class="col-sm-4 col-form-label">dP</label>
+                  <input type='number' class="col-sm-8" name="K_dP" value={{ K_dP }} step="0.1" min="0">
+              </div>
+              <div class="form-group row mb-2">
+                  <label for="K_dI" class="col-sm-4 col-form-label">dI</label>
+                  <input type='number' class="col-sm-8" name="K_dI" value={{ K_dI }} step="0.1" min="0">
+              </div>
+              <div class="form-group row mb-2">
+                  <label for="K_dD" class="col-sm-4 col-form-label">dD</label>
+                  <input type='number' class="col-sm-8" name="K_dD" value={{ K_dD }} step="0.1" min="0">
+              </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row float-right mb-2">
+      <button type="submit" class="btn btn-primary m-1">Save for this run</button>
+      <button formaction="{{url_for('robot.save_user_settings')}}" type="submit" class="m-1 btn btn-primary">Save permanently</button>
+    </div>
+
+  </form>
+</div>
+
+{% endblock %}
